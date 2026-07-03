@@ -29,6 +29,7 @@
 #include <zlib.h>
 #ifdef HAVE_CHD
 #include <libchdr/chd.h>
+#include "streaming_core_file.h"
 #endif
 
 #ifdef _WIN32
@@ -1031,7 +1032,7 @@ static int handlechd(const char *isofile) {
 	if (chd_img == NULL)
 		goto fail_io;
 
-	err = chd_open_file(cdHandle, CHD_OPEN_READ, NULL, &chd_img->chd);
+	err = chd_open_core_file(streaming_core_file_get(), CHD_OPEN_READ, NULL, &chd_img->chd);
 	if (err != CHDERR_NONE) {
 		if (is_chd_ext)
 			SysPrintf("chd_open: %d\n", err);
